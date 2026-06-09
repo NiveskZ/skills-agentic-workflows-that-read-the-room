@@ -13,6 +13,7 @@ network:
     - github.com
 tools:
   web-fetch: {}
+  edit: {}
 sandbox:
   agent: 
     config:
@@ -27,28 +28,17 @@ env:
   PR_BRANCH_PREFIX: "auto/update-github-info"
 ---
 
-Update `site/content/github-info.md` from the latest GitHub blog updates and open a pull request for Mona to review.
+# Update Mona's GitHub Info website
 
-## Usage
+Read `notes/mona-notes.md` before making changes.
 
-Runs daily (fuzzy) and on demand. Uses allowed tools to fetch web pages, read local notes, and propose changes via safe outputs.
+Use these sources:
+- `notes/mona-notes.md`
+- GitHub Blog: https://github.blog/latest/
+- GitHub Changelog: https://github.blog/changelog/
 
-## Steps (agent)
+Update `site/content/github-info.md` with concise, practical updates for readers and include source context when content comes from the GitHub Blog or GitHub Changelog.
 
-1. Read `notes/mona-notes.md` for context and phrasing.
-2. Web fetch and summarize:
-   - https://github.blog/latest/
-   - https://github.blog/changelog/
-3. Update `site/content/github-info.md` with a short "Latest GitHub Updates" section (2–6 bullets), annotate entries with the date and source URL.
-4. Create a branch `${{ env.PR_BRANCH_PREFIX }}/YYYYMMDD`, commit the change, and push.
-5. Emit the `create-pull-request` safe output with branch, title, body summarizing changes and fetched sources; request Mona's review.
-
-## Constraints
-
-- Do not write directly to `main` — use the safe output to propose a pull request.
-- Use only the declared `tools`.
-- If web fetch fails, include an explanatory note in the PR body and only use local notes to update content.
-
-## Outputs
-
-- `create-pull-request` safe output containing branch name, PR title, PR body, and changed files.
+Open a pull request for Mona to review.
+Use a pull request title that mentions Mona or GitHub Info.
+Do not write directly to `main`; rely on `safe-outputs` with `create-pull-request`.
