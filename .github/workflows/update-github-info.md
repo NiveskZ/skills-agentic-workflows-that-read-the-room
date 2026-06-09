@@ -49,3 +49,21 @@ Change only `site/content/github-info.md` in the generated pull request; do not 
 Open a draft pull request for Mona to review that updates `site/content/github-info.md`.
 Use a pull request title that mentions Mona, GitHub Info, or a website update.
 Do not write directly to `main`; rely on `safe-outputs` with `create-pull-request`.
+
+## Important: Patch Format Requirements
+
+When using the `edit` tool to modify files, generate patches in this exact format:
+
+```
+*** Begin Patch
+--- a/path/to/file
++++ b/path/to/file
+@@ -line,count +line,count @@
+ context line
+-removed line
++added line
+ context line
+*** End Patch
+```
+
+The patch MUST start with `*** Begin Patch` and end with `*** End Patch`. Include proper `---` and `+++` file headers with relative paths, and use standard unified diff format with `@@` hunk headers.
