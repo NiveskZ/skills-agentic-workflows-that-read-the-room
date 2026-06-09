@@ -21,11 +21,11 @@ sandbox:
       filesystem: {}
 safe-outputs:
   create-pull-request:
-    title-prefix: "[mona]"
+    title-prefix: "[mona] "
     draft: true
     fallback-as-issue: false 
 env:
-  PR_TITLE: "Update GitHub info (automated)"
+  PR_TITLE: "Mona GitHub Info website update"
   PR_BRANCH_PREFIX: "auto/update-github-info"
 ---
 
@@ -39,9 +39,10 @@ Use these sources:
 - GitHub Changelog: https://github.blog/changelog/
 - awesome-copilot workflows: https://awesome-copilot.github.com/workflows/
 
-Web fetch https://awesome-copilot.github.com/workflows/ and use it as an additional source for Mona's GitHub Info updates.
-Update `site/content/github-info.md` with concise, practical updates for readers and include source context when content comes from the GitHub Blog, GitHub Changelog, or awesome-copilot workflows.
+Use the `web-fetch` tool to fetch https://awesome-copilot.github.com/workflows/ and use it as an additional source for Mona's GitHub Info updates.
+Update exactly `site/content/github-info.md` with concise, practical updates for readers and include source context when content comes from the GitHub Blog, GitHub Changelog, or awesome-copilot workflows.
+Change only `site/content/github-info.md` in the generated pull request; do not modify other repository files.
 
-Open a pull request for Mona to review.
-Use a pull request title that mentions Mona or GitHub Info.
+Open a draft pull request for Mona to review that updates `site/content/github-info.md`.
+Use a pull request title that mentions Mona, GitHub Info, or a website update.
 Do not write directly to `main`; rely on `safe-outputs` with `create-pull-request`.
