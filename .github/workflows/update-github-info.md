@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "0 6 * * *" # daily at 06:00 UTC
   workflow_dispatch: {}
+engine:
+  id: copilot
+  model: auto
 permissions:
   contents: read
   pull-requests: read
