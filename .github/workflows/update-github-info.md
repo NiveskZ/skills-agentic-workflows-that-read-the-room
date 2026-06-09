@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
   pull-requests: read
+network:
+  allowed:
+    - github.blog
+    - github.com
 tools:
   web-fetch: {}
 sandbox:
