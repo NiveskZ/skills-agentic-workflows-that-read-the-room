@@ -31,21 +31,16 @@ env:
 
 # Update Mona's GitHub Info website
 
-Read `notes/mona-notes.md` before making changes.
+Follow these steps in order:
 
-Use these sources:
-- `notes/mona-notes.md`
-- GitHub Blog: https://github.blog/latest/
-- GitHub Changelog: https://github.blog/changelog/
-- awesome-copilot workflows: https://awesome-copilot.github.com/workflows/
-
-Use the `web-fetch` tool to fetch https://awesome-copilot.github.com/workflows/ and use it as an additional source for Mona's GitHub Info updates.
-Update exactly `site/content/github-info.md` with concise, practical updates for readers and include source context when content comes from the GitHub Blog, GitHub Changelog, or awesome-copilot workflows.
-Change only `site/content/github-info.md` in the generated pull request; do not modify other repository files.
-
-Open a draft pull request for Mona to review that updates `site/content/github-info.md`.
-Use a pull request title that mentions Mona, GitHub Info, or a website update.
-Do not write directly to `main`; rely on `safe-outputs` with `create-pull-request`.
+1. Read `notes/mona-notes.md` for editorial guidelines.
+2. Read `site/content/github-info.md` to understand the current content.
+3. Use the `web-fetch` tool to fetch `https://github.blog/latest/` for the latest GitHub Blog posts.
+4. Use the `web-fetch` tool to fetch `https://github.blog/changelog/` for the latest GitHub Changelog entries.
+5. Use the `web-fetch` tool to fetch `https://awesome-copilot.github.com/workflows/` for awesome-copilot workflow examples.
+6. Update `site/content/github-info.md` with concise, practical updates based on what you fetched. Include source context when content comes from the GitHub Blog, GitHub Changelog, or awesome-copilot workflows.
+7. Change only `site/content/github-info.md`; do not modify any other repository files.
+8. Open a draft pull request for Mona to review with a title that mentions Mona, GitHub Info, or a website update. Do not write directly to `main`; rely on `safe-outputs` with `create-pull-request`.
 
 ## Important: Patch Format Requirements
 
