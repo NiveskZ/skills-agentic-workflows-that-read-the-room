@@ -16,5 +16,6 @@ Mona's website focuses on practical GitHub guidance backed by official reference
 - Recent GitHub Blog and Changelog stories worth watching.
 
 ## Latest GitHub Updates
+- Mona: added a concise update summarizing recent GitHub Blog and Changelog items (source: awesome-copilot.github.com)
 
 - GitHub improved code scanning and Actions performance.
