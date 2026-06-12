@@ -1,12 +1,13 @@
 ---
 name: Update GitHub Info
 on:
-  schedule:
-    - cron: "0 6 * * *" # daily at 06:00 UTC
   workflow_dispatch: {}
 permissions:
   contents: read
   pull-requests: read
+concurrency:
+  group: "update-github-info-${{ github.repository }}"
+  cancel-in-progress: true
 network:
   allowed:
     - github.blog
@@ -16,17 +17,52 @@ tools:
   web-fetch: {}
   edit: {}
 sandbox:
-  agent: 
+  agent:
     config:
       filesystem: {}
 safe-outputs:
   create-pull-request:
     title-prefix: "[mona] "
     draft: true
-    fallback-as-issue: false 
+    max: 1
+    fallback-as-issue: false
 env:
   PR_TITLE: "Mona GitHub Info website update"
   PR_BRANCH_PREFIX: "auto/update-github-info"
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: preflight
+        name: Preflight check for existing updater PR
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const core = require('@actions/core');
+            const prPrefix = process.env.PR_BRANCH_PREFIX || 'auto/update-github-info';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open' });
+            let found = false;
+            let url = '';
+            for (const p of prs) {
+              if (p.head && p.head.ref && p.head.ref.startsWith(prPrefix)) { found = true; url = p.html_url; break; }
+            }
+            if (!found) {
+              for (const p of prs) {
+                const files = await github.paginate(github.rest.pulls.listFiles, { owner, repo, pull_number: p.number });
+                if (files.some(f => f.filename === 'site/content/github-info.md')) { found = true; url = p.html_url; break; }
+              }
+            }
+            core.setOutput('pr_found', found ? 'true' : 'false');
+            core.setOutput('pr_url', url || '');
+      - name: Exit early if updater PR found
+        if: ${{ steps.preflight.outputs.pr_found == 'true' }}
+        run: |
+          echo "Updater PR already open: ${{ steps.preflight.outputs.pr_url }}"
+          exit 0
 ---
 
 # Update Mona's GitHub Info website
